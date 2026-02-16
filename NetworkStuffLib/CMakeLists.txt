@@ -9,8 +9,7 @@ include_directories(
 )
 
 # Add source to this project's executable.
-add_executable (NetworkStuff
-	"main.cpp"
+add_library (NetworkStuffLib STATIC
 	"utils/NoCopy.h" 
 	"utils/NoMove.h" 
 	"utils/Logger.h" 
@@ -47,11 +46,11 @@ add_executable (NetworkStuff
 	"utils/MakeException.h")
 
 if(WIN32)
-    target_link_libraries(NetworkStuff PRIVATE ws2_32)
+    target_link_libraries(NetworkStuffLib PRIVATE ws2_32)
 endif()
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET NetworkStuff PROPERTY CXX_STANDARD 20)
+  set_property(TARGET NetworkStuffLib PROPERTY CXX_STANDARD 20)
 endif()
 
 # TODO: Add tests and install targets if needed.

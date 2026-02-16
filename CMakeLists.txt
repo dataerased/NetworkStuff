@@ -14,4 +14,5 @@ endif()
 project ("NetworkStuff")
 
 # Include sub-projects.
-add_subdirectory ("NetworkStuff")
+add_subdirectory ("NetworkStuffLib")
+add_subdirectory ("Example")
