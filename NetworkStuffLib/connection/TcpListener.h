@@ -9,10 +9,12 @@
 
 namespace connection
 {
-	class TcpListener : utils::NoCopy, utils::NoMove
+	class TcpListener : utils::NoCopy
 	{
 	public:
 		TcpListener(SOCKET socket, const Endpoint& ep);
+		TcpListener(TcpListener&& o) noexcept;
+		TcpListener& operator=(TcpListener&& o) noexcept;
 		~TcpListener();
 		void close();
 		Endpoint endpoint() const;

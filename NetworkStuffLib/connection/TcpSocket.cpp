@@ -39,9 +39,9 @@ namespace connection
 
 	TcpSocket& TcpSocket::operator=(TcpSocket&& o) noexcept
 	{
-		close();
 		if (this != &o) {
 
+			close();
 			m_socket = o.m_socket;
 			m_ep = o.m_ep;
 

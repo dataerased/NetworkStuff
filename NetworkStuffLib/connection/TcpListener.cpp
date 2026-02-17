@@ -9,6 +9,29 @@ namespace connection
 	{
 	}
 
+	TcpListener::TcpListener(TcpListener&& o) noexcept
+		: m_socket(o.m_socket)
+		, m_ep(o.m_ep)
+		, m_running(false)
+	{
+		m_socket = INVALID_SOCKET;
+		m_ep = {};
+	}
+
+	TcpListener& TcpListener::operator=(TcpListener&& o) noexcept
+	{
+		if (this != &o) {
+
+			close();
+			m_socket = o.m_socket;
+			m_ep = o.m_ep;
+
+			o.m_socket = INVALID_SOCKET;
+			o.m_ep = {};
+		}
+		return *this;
+	}
+
 	TcpListener::~TcpListener()
 	{
 		close();
