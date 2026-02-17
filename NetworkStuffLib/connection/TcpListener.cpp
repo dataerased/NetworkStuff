@@ -14,8 +14,8 @@ namespace connection
 		, m_ep(o.m_ep)
 		, m_running(false)
 	{
-		m_socket = INVALID_SOCKET;
-		m_ep = {};
+		o.m_socket = INVALID_SOCKET;
+		o.m_ep = {};
 	}
 
 	TcpListener& TcpListener::operator=(TcpListener&& o) noexcept
