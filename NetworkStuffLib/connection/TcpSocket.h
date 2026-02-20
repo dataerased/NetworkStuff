@@ -2,6 +2,7 @@
 #include <mutex>
 #include <thread>
 #include <functional>
+#include <vector>
 #include "Endpoint.h"
 #include "utils/NoCopy.h"
 #include "utils/MakeException.h"
@@ -21,7 +22,7 @@ namespace connection
 		void close();
 		int write(const void* data, int size);
 		int read(void* data, int size, const std::chrono::steady_clock::duration& timeout = std::chrono::seconds(1));
-		void async_read(size_t buffer_max_size, std::function<void(const char* data, size_t size)> cb);
+		void async_read(size_t buffer_max_size, std::function<void(const std::vector<char>& buffer)> cb);
 		void stop_async();
 		operator bool() const;
 		const Endpoint& endpoint() const;

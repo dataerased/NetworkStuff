@@ -132,7 +132,7 @@ namespace connection
 		return size - elapsed;
 	}
 
-	void TcpSocket::async_read(size_t buffer_max_size, std::function<void(const char* data, size_t size)> cb)
+	void TcpSocket::async_read(size_t buffer_max_size, std::function<void(const std::vector<char>& buffer)> cb)
 	{
 		m_reading = true;
 		m_read_loop = std::thread([&, buffer_max_size, cb]() {
@@ -141,9 +141,13 @@ namespace connection
 			{
 				try
 				{
+					buffer.resize(buffer_max_size);
 					auto readed = read(&buffer[0], static_cast<int>(buffer.size()), std::chrono::milliseconds(100));
 					if (readed)
-						cb(buffer.data(), readed);
+					{
+						buffer.resize(readed);
+						cb(buffer);
+					}
 				}
 				catch (const std::exception&)
 				{
