@@ -4,17 +4,30 @@
 
 namespace logger
 {
+	LoggerManager* LoggerManager::m_this = new LoggerManager();
+
 	const std::chrono::steady_clock::time_point LoggerManager::LogHelper::m_start = std::chrono::steady_clock::now();
 
 	LoggerManager::LoggerManager()
 	{
 	}
 
+	LoggerManager& LoggerManager::manager()
+	{
+		return *m_this;
+	}
+
+	void LoggerManager::add_log_function(const std::function<void(const std::string& text)>& cb)
+	{
+		m_callbacks.push_back(cb);
+	}
+
 	void LoggerManager::safe_log(const std::string& text)
 	{
 		static std::mutex mtx;
 		std::unique_lock<decltype(mtx)> lock(mtx);
-		std::cout << text;
+		for (auto& cb : m_callbacks)
+			cb(text);
 	}
 
 	LoggerManager::LogHelper LoggerManager::helper()
@@ -59,7 +72,6 @@ namespace logger
 
 	LoggerManager::LogHelper Log()
 	{
-		static LoggerManager l{};
-		return l.helper();
+		return LoggerManager::manager().helper();
 	}
 }

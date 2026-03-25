@@ -2,12 +2,13 @@
 #include <iostream>
 #include <sstream>
 #include <chrono>
+#include <list>
+#include <functional>
 #include "NoMove.h"
 #include "NoCopy.h"
 
 namespace logger
 {
-
 	class LoggerManager : utils::NoCopy, utils::NoMove
 	{
 	public:
@@ -33,9 +34,17 @@ namespace logger
 
 		};
 
-		LoggerManager();
+		static LoggerManager& manager();
+		void add_log_function(const std::function<void(const std::string& text)>& cb);
+
 		void safe_log(const std::string& text);
 		LogHelper helper();
+
+	private:
+		LoggerManager();
+
+		static LoggerManager* m_this;
+		std::list<std::function<void(const std::string& text)>> m_callbacks;
 
 	};
 

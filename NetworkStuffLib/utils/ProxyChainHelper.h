@@ -18,6 +18,8 @@ namespace utils
 		void add_proxy(const connection::Endpoint& proxy_ep, bool is_critical = false);
 		size_t validate_existed(size_t n_threads = 10);
 
+		std::list<connection::Endpoint> current_pool();
+
 		struct Chain
 		{
 			std::vector<connection::Endpoint> chain;

@@ -135,4 +135,9 @@ namespace utils
 			m_proxies.Lock()->push_back(proxy_ep);
 		}
 	}
+
+	std::list<connection::Endpoint> ProxyChainHelper::current_pool()
+	{
+		return m_proxies.Lock().ref();
+	}
 }
